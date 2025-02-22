@@ -4,6 +4,8 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactListComponent } from './ContactList/ContactList';
 import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact, deleteContact, setFilter } from './redux/contactsSlice';
 
 export const App = () => {
   const [contacts, setContacts] = useState(() => {
