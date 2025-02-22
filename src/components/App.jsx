@@ -1,26 +1,14 @@
 import Notiflix from 'notiflix';
-import { nanoid } from 'nanoid';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactListComponent } from './ContactList/ContactList';
-import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact, deleteContact, setFilter } from './redux/contactsSlice';
+import { addContact, deleteContact, setFilter } from '../redux/contactSlice';
 
 export const App = () => {
-  const [contacts, setContacts] = useState(() => {
-    const savedContacts = localStorage.getItem('contact');
-    if (savedContacts !== null) {
-      return JSON.parse(savedContacts);
-    } else {
-      return [];
-    }
-  });
-  const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    localStorage.setItem('contact', JSON.stringify(contacts));
-  }, [contacts]);
+  const contacts = useSelector(state => state.contacts.contacts);
+  const filter = useSelector(state => state.contacts.filter || '');
+  const dispatch = useDispatch();
 
   const addNumber = ({ name, number }) => {
     const contactWithSameName = contacts.find(
@@ -40,18 +28,17 @@ export const App = () => {
     } else if (contactWithSameNumber) {
       Notiflix.Notify.failure(`Контакт з номером ${number} вже існує!`);
     } else {
-      const newContact = { id: nanoid(), name, number };
-      setContacts(prevState => [...prevState, newContact]);
+      dispatch(addContact({ name, number }));
       Notiflix.Notify.success(`Контакт ${name} успішно додано!`);
     }
   };
 
   const filterContacts = event => {
-    setFilter(event.target.value);
+    dispatch(setFilter(event.target.value));
   };
 
   const handleDelete = id => {
-    setContacts(prevState => prevState.filter(contact => contact.id !== id));
+    dispatch(deleteContact(id));
   };
 
   const filteredContacts = contacts.filter(
