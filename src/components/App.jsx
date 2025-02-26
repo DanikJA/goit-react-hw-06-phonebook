@@ -4,25 +4,11 @@ import { Filter } from './Filter/Filter';
 import { ContactListComponent } from './ContactList/ContactList';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact, deleteContact, setFilter } from '../redux/contactSlice';
-import { useEffect } from 'react';
 
 export const App = () => {
   const contacts = useSelector(state => state.contacts.contacts);
   const filter = useSelector(state => state.contacts.filter || '');
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const storedContacts = JSON.parse(localStorage.getItem('Contacts'));
-    if (storedContacts) {
-      storedContacts.forEach(contact => {
-        dispatch(addContact(contact.name, contact.number));
-      });
-    }
-  }, [dispatch]);
-
-  if (contacts.length > 0) {
-    localStorage.setItem('Contacts', JSON.stringify(contacts));
-  }
 
   const addNumber = ({ name, number }) => {
     const contactWithSameName = contacts.find(
