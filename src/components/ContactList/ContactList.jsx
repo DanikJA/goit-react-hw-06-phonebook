@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 
 export const ContactListComponent = () => {
   const contacts = useSelector(state => state.contacts.contacts);
+  console.log(contacts);
   const filter = useSelector(state => state.contacts.filter || '');
 
   const filteredContacts = contacts.filter(
