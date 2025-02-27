@@ -16,6 +16,7 @@ import {
 const persistConfig = {
   key: 'root',
   storage,
+  whitelist: ['contacts'],
 };
 
 const persistedReducer = persistReducer(persistConfig, contactReducer);
