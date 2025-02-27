@@ -1,8 +1,18 @@
 import { SearchLabel, SearchInput } from './FilterStyled';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilter } from '../../redux/contactSlice.js';
 
-export const Filter = ({ value, onChange }) => (
-  <SearchLabel>
-    Find contacts by name
-    <SearchInput type="text" value={value} onChange={onChange} />
-  </SearchLabel>
-);
+export const Filter = () => {
+  const filter = useSelector(state => state.contacts.filter || '');
+  const dispatch = useDispatch();
+
+  const filterContacts = event => {
+    dispatch(setFilter(event.target.value));
+  };
+  return (
+    <SearchLabel>
+      Find contacts by name
+      <SearchInput type="text" value={filter} onChange={filterContacts} />
+    </SearchLabel>
+  );
+};
