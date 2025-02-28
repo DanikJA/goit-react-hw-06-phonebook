@@ -1,9 +1,10 @@
 import { SearchLabel, SearchInput } from './FilterStyled';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from '../../redux/contactSlice.js';
+import { selectFilter } from '../../redux/Selectors.js';
 
 export const Filter = () => {
-  const filter = useSelector(state => state.contacts.filter || '');
+  const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
 
   const filterContacts = event => {

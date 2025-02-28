@@ -5,11 +5,12 @@ import {
   ContactList,
 } from './ContactListStyled.jsx';
 import { useSelector } from 'react-redux';
+import { selectFilter, selectContacts } from '../../redux/Selectors.js';
 
 export const ContactListComponent = () => {
-  const contacts = useSelector(state => state.contacts.contacts);
-  console.log(contacts);
-  const filter = useSelector(state => state.contacts.filter || '');
+  const contacts = useSelector(selectContacts);
+
+  const filter = useSelector(selectFilter);
 
   const filteredContacts = contacts.filter(
     contact =>

@@ -9,6 +9,8 @@ import {
   SubmitButton,
   ErrorText,
 } from './ContactFormStyled.jsx';
+import { selectContacts } from '../../redux/Selectors.js';
+
 import * as Yup from 'yup';
 
 const numbersSchema = Yup.object().shape({
@@ -19,7 +21,7 @@ const numbersSchema = Yup.object().shape({
 });
 
 export const ContactForm = () => {
-  const contacts = useSelector(state => state.contacts.contacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const addNumber = ({ name, number }) => {
